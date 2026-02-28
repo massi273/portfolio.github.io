@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Projets — Massinissa BRAKNI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2;
+      --accent1:#7c5cff; --accent2:#00d4ff; --glass:rgba(255,255,255,0.06);
+      --radius:12px; --max-width:1100px;
+    }
+    [data-theme="light"]{
+      --bg:#f6f8fb; --card:#fff; --muted:#55606a;
+      --accent1:#5b21b6; --accent2:#0ea5a4; --glass:rgba(0,0,0,0.04);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      background: radial-gradient(900px 400px at 10% 10%, rgba(124,92,255,0.06), transparent), var(--bg);
+      color:#e6eef6;padding:36px;display:flex;justify-content:center;
+    }
+    .wrap{width:100%;max-width:var(--max-width)}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .mark{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700}
+    nav a{color:var(--muted);text-decoration:none;margin-left:12px;font-weight:600}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:var(--radius);border:1px solid var(--glass)}
+    .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+    .search{flex:1;min-width:200px}
+    input[type="search"]{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--glass);background:transparent;color:inherit}
+    .filters{display:flex;gap:8px;flex-wrap:wrap}
+    .filter-btn{background:transparent;border:1px solid var(--glass);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
+    .filter-btn.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;border:0}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:12px}
+    .card{background:var(--card);padding:14px;border-radius:12px;border:1px solid var(--glass);display:flex;flex-direction:column;gap:10px;transition:transform .18s ease,box-shadow .18s ease;cursor:pointer}
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.45)}
+    .thumb{height:120px;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+    .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .tools{display:flex;gap:8px;flex-wrap:wrap}
+    .tool{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:999px;color:var(--muted);font-size:12px}
+    .desc{color:var(--muted);font-size:14px}
+    .actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+    .btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff;padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:700}
+    .ghost{background:transparent;border:1px solid var(--glass);color:var(--muted);padding:8px 10px;border-radius:10px;text-decoration:none}
+    .icon-btn{background:transparent;border:1px solid var(--glass);color:var(--muted);padding:8px 10px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+    .icon-btn:hover{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;border:0}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:20px;background:linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.85));z-index:60}
+    .modal.open{display:flex}
+    .modal-card{width:100%;max-width:900px;background:var(--card);padding:20px;border-radius:12px;border:1px solid var(--glass);color:inherit;max-height:90vh;overflow:auto}
+    .modal-close{float:right;background:transparent;border:0;color:var(--muted);cursor:pointer;font-size:18px}
+
+    footer{margin-top:22px;color:var(--muted);font-size:13px;text-align:center}
+    .socials{display:flex;gap:8px;justify-content:center;margin-top:10px}
+    .socials a{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:transparent;border:1px solid var(--glass);color:var(--muted);text-decoration:none}
+    .socials a:hover{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white}
+
+    @media (max-width:900px){body{padding:18px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="mark">MB</div>
+        <div>
+          <div style="font-weight:700">Massinissa BRAKNI</div>
+          <div style="font-size:13px;color:var(--muted)">Projets détaillés</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="index.html">Accueil</a>
+        <a href="projets.html">Projets</a>
+        <a href="contact.html">Contact</a>
+        <button class="icon-btn" id="themeToggle" title="Basculer thème">🌓</button>
+      </nav>
+      
+    </header>
+
+    <section class="panel" aria-labelledby="projectsTitle">
+      <h2 id="projectsTitle" style="margin:0 0 8px 0">Projets</h2>
+      <p style="margin:0 0 12px 0;color:var(--muted)">Cliquez sur une carte pour voir la fiche détaillée. Les boutons GitHub et Voir en ligne sont générés automatiquement selon les liens fournis.</p>
+
+      <div class="toolbar">
+        <div class="search">
+          <input id="searchInput" type="search" placeholder="Rechercher par titre, description ou outil (ex: HTML)">
+        </div>
+
+        <div class="filters" id="filters">
+          <button class="filter-btn active" data-filter="all">Tous</button>
+          <button class="filter-btn" data-filter="HTML">HTML</button>
+          <button class="filter-btn" data-filter="CSS">CSS</button>
+          <button class="filter-btn" data-filter="JavaScript">JavaScript</button>
+          <button class="filter-btn" data-filter="Python">Python</button>
+          <button class="filter-btn" data-filter="Language C">Language C</button>
+          <button class="filter-btn" data-filter="SQLite">SQLite</button>
+          <button class="filter-btn" data-filter="Linux">Linux</button>
+        </div>
+      </div>
+
+      <div class="grid" id="projectsGrid">
+        <!-- Projet 1 -->
+        <article class="card" tabindex="0"
+                 data-title="Portfolio Animé"
+                 data-desc="Portfolio one‑page animé, optimisé et modulaire."
+                 data-tools="HTML;CSS;JavaScript"
+                 data-github="https://github.com/massi273/portfolio.github.io"
+                 data-live="">
+          <div class="thumb">Portfolio</div>
+          <div class="meta">
+            <strong>Portfolio Animé</strong>
+            <span style="color:var(--muted);font-size:13px">2026</span>
+          </div>
+          <div class="desc">One‑page animé, optimisé pour performance et SEO.</div>
+          <div class="tools">
+            <span class="tool">HTML</span><span class="tool">CSS</span><span class="tool">JavaScript</span>
+          </div>
+          <div class="actions"></div>
+        </article>
+
+        <!-- Projet 2 -->
+        <article class="card" tabindex="0"
+                 data-title="Gestionnaire d'équipement Informatique"
+                 data-desc="Application desktop de gestion de parc informatique (Python/Tkinter, SQLite). Back‑end : base de données, logique métier, architecture MVC et requêtes SQL."
+                 data-tools="Python;SQLite"
+                 data-github="https://github.com/massi273/gest_equip">
+          <div class="thumb">Gestionnaire d'equipement</div>
+          <div class="meta">
+            <strong>Gestionnaire d'équipement</strong>
+            <span style="color:var(--muted);font-size:13px">Projet de groupe</span>
+          </div>
+          <div class="desc">Application desktop pour gérer un parc informatique ; prise en charge du back‑end et de la BD.</div>
+          <div class="tools">
+            <span class="tool">Python</span><span class="tool">SQLite</span>
+          </div>
+          <div class="actions"></div>
+        </article>
+
+        <!-- Projet 3 -->
+        <article class="card" tabindex="0"
+                 data-title="L2 Resources"
+                 data-desc="Plateforme dédiée aux étudiants de Licence 2 Informatique regroupant matières, ressources et informations de modules."
+                 data-tools="HTML;CSS;JavaScript"
+                 data-github="https://github.com/massi273/l2informatique.github.io"
+                 data-live="https://massi273.github.io/l2informatique.github.io/">
+          <div class="thumb">L2 Resources</div>
+          <div class="meta">
+            <strong>L2 Resources</strong>
+            <span style="color:var(--muted);font-size:13px">Projet collaboratif</span>
+          </div>
+          <div class="desc">Portail organisé pour accéder aux contenus et ressources du programme de Licence 2 Informatique.</div>
+          <div class="tools">
+            <span class="tool">HTML</span><span class="tool">CSS</span><span class="tool">JavaScript</span>
+          </div>
+          <div class="actions"></div>
+        </article>
+        <!--projet 4-->
+         <article class="card" tabindex="0"
+                 data-title="L2 Resources"
+                 data-desc="Plateforme dédiée aux étudiants de Licence 2 Informatique regroupant matières, ressources et informations de modules."
+                 data-tools="Language C; Linux"
+                 data-github="https://github.com/massi273/signaux-ipc">
+          <div class="thumb">Signaux-ipc </div>
+          <div class="meta">
+            <strong>Signaux-ipc </strong>
+            <span style="color:var(--muted);font-size:13px">2025</span>
+          </div>
+          <div class="desc">Un code en langage C qui permet de contrôler un processus fils à partir d'un processus père en utilisant les signaux.</div>
+          <div class="tools">
+            <span class="tool">Language C</span><span class="tool">Linux</span>
+          </div>
+          <div class="actions"></div>
+        </article>
+           <!--projet 5-->
+         <article class="card" tabindex="0"
+                 data-title="L2 Resources"
+                 data-desc="Plateforme dédiée aux étudiants de Licence 2 Informatique regroupant matières, ressources et informations de modules."
+                 data-tools="Language C; Linux"
+                 data-github="https://github.com/massi273/sockets.c">
+          <div class="thumb">Sockets-ipc </div>
+          <div class="meta">
+            <strong>Sockets-ipc </strong>
+            <span style="color:var(--muted);font-size:13px">2025</span>
+          </div>
+          <div class="desc">Un code en langage C qui permet de communique entre un processus serveur et un processus client via les sockets.</div>
+          <div class="tools">
+            <span class="tool">Language C</span><span class="tool">Linux</span>
+          </div>
+          <div class="actions"></div>
+        </article>
+        
+        
+        
+
+      </div>
+      
+    </section>
+    
+
+    <!-- Modal détail projet -->
+    <div class="modal" id="modal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Fermer">✕</button>
+        <h3 id="modalTitle">Titre projet</h3>
+        <p id="modalDesc" style="color:var(--muted)"></p>
+        <div id="modalTools" style="margin-top:10px;color:var(--muted)"></div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <a class="btn" id="modalLink" href="#" target="_blank" rel="noopener noreferrer">Voir le dépôt GitHub</a>
+          <a class="icon-btn" id="modalOpenLive" href="#" target="_blank" rel="noopener noreferrer" style="display:none">Voir en ligne</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div style="font-weight:700">Contact</div>
+      <div class="socials" aria-label="Réseaux">
+        <a href="https://www.instagram.com/ma__ssiii_/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://wa.me/21369799491" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://linkedin.com/in/tonprofil" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/massi273" target="_blank" rel="noopener">GitHub</a>
+        <a href="contact.html">Email</a>
+      </div>
+      <div style="margin-top:10px;color:var(--muted)">© <span id="year"></span> Massinissa BRAKNI</div>
+    </footer>
+  </div>
+
+  <script>
+   (function () {
+
+  // =========================
+  // THEME TOGGLE
+  // =========================
+  const themeToggle = document.getElementById('themeToggle');
+  const stored = localStorage.getItem('theme');
+
+  if (stored) {
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? '' : 'light';
+
+      if (next) {
+        document.documentElement.setAttribute('data-theme', next);
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+
+      localStorage.setItem('theme', next);
+    });
+  }
+
+  // =========================
+  // RECHERCHE ET FILTRES
+  // =========================
+  const grid = document.getElementById('projectsGrid');
+  if (!grid) return;
+
+  const cards = Array.from(grid.querySelectorAll('.card'));
+  const searchInput = document.getElementById('searchInput');
+  const filterBtns = Array.from(document.querySelectorAll('.filter-btn'));
+
+  function normalize(s) {
+    return s ? s.toString().toLowerCase() : '';
+  }
+
+  // Ajouter les boutons GitHub + Live
+  cards.forEach(card => {
+    let actions = card.querySelector('.actions');
+
+    if (!actions) {
+      actions = document.createElement('div');
+      actions.className = 'actions';
+      card.appendChild(actions);
+    } else {
+      actions.innerHTML = '';
+    }
+
+    if (card.dataset.github?.trim()) {
+      const gh = document.createElement('a');
+      gh.className = 'btn';
+      gh.href = card.dataset.github;
+      gh.target = '_blank';
+      gh.rel = 'noopener noreferrer';
+      gh.textContent = 'Voir sur GitHub';
+      actions.appendChild(gh);
+    }
+
+    if (card.dataset.live?.trim()) {
+      const live = document.createElement('a');
+      live.className = 'icon-btn';
+      live.href = card.dataset.live;
+      live.target = '_blank';
+      live.rel = 'noopener noreferrer';
+      live.textContent = 'Voir en ligne';
+      actions.appendChild(live);
+    }
+  });
+
+  function applyFilter() {
+    const q = normalize(searchInput?.value);
+    const active = filterBtns.find(b => b.classList.contains('active'));
+    const tech = active ? active.dataset.filter : 'all';
+
+    cards.forEach(card => {
+      const title = normalize(card.dataset.title);
+      const desc = normalize(card.dataset.desc);
+      const tools = normalize(card.dataset.tools);
+
+      const matchesQuery =
+        q === '' ||
+        title.includes(q) ||
+        desc.includes(q) ||
+        tools.includes(q);
+
+      const toolsList = (card.dataset.tools || '')
+        .replace(/,/g, ';')
+        .split(';')
+        .map(t => t.trim())
+        .filter(Boolean);
+
+      const matchesTech =
+        tech === 'all' || toolsList.includes(tech);
+
+      card.style.display =
+        (matchesQuery && matchesTech) ? '' : 'none';
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', applyFilter);
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilter();
+    });
+  });
+
+  // =========================
+  // MODAL
+  // =========================
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalTools = document.getElementById('modalTools');
+  const modalLink = document.getElementById('modalLink');
+  const modalOpenLive = document.getElementById('modalOpenLive');
+  const modalClose = document.getElementById('modalClose');
+
+  function openModal(card) {
+    if (!modal) return;
+
+    modalTitle.textContent = card.dataset.title || 'Projet';
+    modalDesc.textContent = card.dataset.desc || '';
+
+    modalTools.innerHTML =
+      '<strong>Outils utilisés</strong>: ' +
+      (card.dataset.tools
+        ? card.dataset.tools
+            .replace(/,/g, ';')
+            .split(';')
+            .map(t => t.trim())
+            .filter(Boolean)
+            .join(', ')
+        : '—');
+
+    if (modalLink) {
+      if (card.dataset.github?.trim()) {
+        modalLink.href = card.dataset.github;
+        modalLink.style.display = 'inline-flex';
+      } else {
+        modalLink.style.display = 'none';
+      }
+    }
+
+    if (modalOpenLive) {
+      if (card.dataset.live?.trim()) {
+        modalOpenLive.href = card.dataset.live;
+        modalOpenLive.style.display = 'inline-flex';
+      } else {
+        modalOpenLive.style.display = 'none';
+      }
+    }
+
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    modalClose?.focus();
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('a')) return;
+      openModal(card);
+    });
+
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal(card);
+      }
+    });
+  });
+
+  if (modalClose) {
+    modalClose.addEventListener('click', () => {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    });
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  // =========================
+  // YEAR
+  // =========================
+  const year = document.getElementById('year');
+  if (year) {
+    year.textContent = new Date().getFullYear();
+  }
+
+})();
+  </script>
+</body>
+</html>

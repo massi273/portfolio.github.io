@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — Ton Nom</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2;
+      --accent1:#7c5cff; --accent2:#00d4ff; --glass:rgba(255,255,255,0.06);
+      --radius:12px; --max-width:900px;
+    }
+    [data-theme="light"]{
+      --bg:#f6f8fb; --card:#fff; --muted:#55606a;
+      --accent1:#5b21b6; --accent2:#0ea5a4; --glass:rgba(0,0,0,0.04);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      background: radial-gradient(900px 400px at 10% 10%, rgba(124,92,255,0.06), transparent), var(--bg);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:36px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .wrap{width:100%;max-width:var(--max-width)}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .mark{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700}
+    nav a{color:var(--muted);text-decoration:none;margin-left:12px;font-weight:600}
+
+    .social-bar{
+      display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 18px 0;
+    }
+    .social-item{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border:1px solid var(--glass);color:var(--muted);text-decoration:none;font-weight:600;
+      transition:transform .16s ease, background .16s ease, color .16s ease;
+    }
+    .social-item svg{width:18px;height:18px;flex-shrink:0}
+    .social-item:hover{transform:translateY(-6px);color:white;background:linear-gradient(90deg,var(--accent1),var(--accent2))}
+
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      padding:20px;border-radius:var(--radius);border:1px solid var(--glass);
+    }
+
+    .layout{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+    @media (max-width:980px){ .layout{grid-template-columns:1fr} .social-bar{justify-content:center} }
+    .icon-btn{background:transparent;border:1px solid var(--glass);color:var(--muted);padding:8px 10px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+    .icon-btn:hover{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;border:0}
+    form{display:grid;gap:12px}
+    .row{display:flex;gap:10px}
+    .row .col{flex:1}
+    input,textarea,select{
+      background:transparent;border:1px solid var(--glass);padding:10px;border-radius:10px;color:inherit;font-size:14px;
+      outline:none;
+    }
+    input::placeholder,textarea::placeholder{color:var(--muted)}
+    .btn{
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff;padding:10px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer;
+    }
+    .muted{color:var(--muted);font-size:13px}
+
+    .contact-info{display:flex;flex-direction:column;gap:10px}
+    .info-item{display:flex;gap:10px;align-items:center;color:var(--muted)}
+    .info-item svg{width:18px;height:18px;flex-shrink:0}
+
+    footer{margin-top:20px;color:var(--muted);font-size:13px;text-align:center}
+    footer .links{display:flex;gap:10px;justify-content:center;margin-bottom:8px;flex-wrap:wrap}
+    footer a{color:var(--muted);text-decoration:none}
+
+    /* small validation message */
+    .form-msg{color:#ffd166;font-size:13px}
+    /* container must be position:relative to anchor the floating box */
+.social-item.contact-toggle{position:relative;display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;cursor:pointer}
+.contact-box{
+  position:absolute;
+  top:calc(100% + 10px);
+  left:0;
+  min-width:220px;
+  background:var(--card);
+  border:1px solid var(--glass);
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(2,6,23,0.6);
+  color:inherit;
+  display:none;
+  z-index:40;
+  transform-origin:top left;
+  transform:translateY(-6px);
+  opacity:0;
+  transition:opacity .14s ease, transform .14s ease;
+}
+
+/* show on focus-within (keyboard or click focus) */
+.social-item.contact-toggle:focus-within,
+.social-item.contact-toggle:focus{
+  outline: none;
+}
+.social-item.contact-toggle:focus-within .contact-box,
+.social-item.contact-toggle:focus .contact-box{
+  display:block;
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* visual hint when expanded */
+.social-item.contact-toggle[aria-expanded="true"]{box-shadow:0 8px 20px rgba(0,0,0,0.25)}
+
+/* contact box internals */
+.contact-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.contact-value{font-size:14px;color:var(--muted);word-break:break-all;margin-bottom:8px}
+.contact-actions{display:flex;gap:8px}
+.btn.small{padding:6px 8px;font-size:13px;border-radius:8px}
+.copy-btn{background:transparent;border:1px solid var(--glass);color:var(--muted);padding:6px 8px;border-radius:8px;cursor:pointer;font-size:13px}
+.copy-btn:hover{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;border:0}
+
+/* responsive: center boxes on small screens */
+@media (max-width:980px){
+  .contact-box{left:auto;right:0;min-width:200px}
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="mark">MB</div>
+        <div>
+          <div style="font-weight:700">Massinissa BRAKNI</div>
+          <div style="font-size:13px;color:var(--muted)">Contact</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="index.html">Accueil</a>
+        <a href="projets.html">Projets</a>
+        <a href="contact.html">Contact</a>
+        <button class="icon-btn" id="themeToggle" title="Basculer thème">🌓</button>
+      </nav>
+    </header>
+
+    <!-- Social bar indépendante -->
+    <div class="social-bar" aria-label="Réseaux sociaux">
+      <a class="social-item" href="https://www.instagram.com/ma__ssiii_/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Instagram</span>
+      </a>
+
+      <div class="social-item contact-toggle" data-type="whatsapp" tabindex="0" aria-haspopup="true" aria-expanded="false">
+   <svg viewBox="0 0 24 24" width="60" height="60" fill="none" aria-hidden="true">
+  
+  <!-- Bulle -->
+  <path d="M12 3
+           A9 9 0 0 1 21 12
+           A9 9 0 0 1 12 21
+           A8.5 8.5 0 0 1 8 20
+           L4 21
+           L5 17
+           A8.5 8.5 0 0 1 3 12
+           A9 9 0 0 1 12 3Z"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linejoin="round"/>
+
+  <!-- Téléphone -->
+  <path d="M10 9.5
+           C10.3 8.8 11 8.5 11.6 8.8
+           L12.6 9.3
+           C13 9.5 13.2 10 13 10.4
+           L12.5 11.2
+           C12.4 11.4 12.4 11.7 12.6 11.9
+           L13.9 13.2
+           C14.1 13.4 14.4 13.4 14.6 13.3
+           L15.4 12.8
+           C15.8 12.6 16.3 12.8 16.5 13.2
+           L17 14.2
+           C17.3 14.8 17 15.5 16.3 15.8
+           C14.8 16.4 12.8 15.6 11.2 14
+           C9.6 12.4 8.8 10.4 9.4 8.9Z"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+</svg>
+    <span>WhatsApp</span>
+
+    <div class="contact-box" role="dialog" aria-label="WhatsApp" aria-hidden="true">
+        <div class="contact-row">
+        <strong>WhatsApp</strong>
+        <button class="copy-btn" data-copy="+212600000000" type="button" title="Copier le numéro">Copier</button>
+        </div>
+        <div class="contact-value">+213 6 97 99 49 15 </div>
+        <div class="contact-actions">
+        
+        </div>
+    </div>
+    </div>
+
+
+      <a class="social-item" href="https://www.linkedin.com/in/massinissa-brakni-03114a320/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>LinkedIn</span>
+      </a>
+
+      <a class="social-item" href="https://github.com/massi273" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2C7.6 2 4 5.6 4 10c0 3.5 2.3 6.5 5.5 7.6.4.1.6-.2.6-.5v-1.9c-2.2.5-2.7-1-2.7-1-.4-1-1-1.3-1-1.3-.8-.6.1-.6.1-.6.9.1 1.4.9 1.4.9.8 1.4 2.2 1 2.7.8.1-.6.3-1 .6-1.3-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.9-2.2-.1-.2-.4-1.1.1-2.3 0 0 .7-.2 2.3.9.7-.2 1.5-.3 2.3-.3s1.6.1 2.3.3c1.6-1.1 2.3-.9 2.3-.9.5 1.2.2 2.1.1 2.3.6.6.9 1.3.9 2.2 0 3.1-1.9 3.8-3.7 4 .3.3.6.8.6 1.6v2.4c0 .3.2.6.6.5C17.7 16.5 20 13.5 20 10c0-4.4-3.6-8-8-8z" stroke="currentColor" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>GitHub</span>
+      </a>
+    <div class="social-item contact-toggle" data-type="email" tabindex="0" aria-haspopup="true" aria-expanded="false">
+    <!-- icône Email -->
+<svg viewBox="0 0 24 24" width="60" height="60" fill="none" aria-hidden="true">
+  
+  <!-- Contour enveloppe -->
+  <rect x="3" y="5" width="18" height="14" rx="2"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linejoin="round"/>
+
+  <!-- Rabat -->
+  <path d="M3 7L12 13L21 7"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+</svg>    <span>Email</span>
+
+    <div class="contact-box" role="dialog" aria-label="Email" aria-hidden="true">
+        <div class="contact-row">
+        <strong>Email</strong>
+        <button class="copy-btn" data-copy="massibrakni7@gmail.com" type="button" title="Copier l'email">Copier</button>
+        </div>
+        <div class="contact-value">massibrakni7@gmail.com</div>
+        <div class="contact-actions">
+        
+        </div>
+    </div>
+    </div>
+
+
+    </div>
+
+    <div class="layout">
+      <main>
+        <section class="panel" aria-labelledby="contactTitle">
+  <h2 id="contactTitle" style="margin:0 0 8px 0">Contactez-moi</h2>
+  <p class="muted" style="margin:0 0 12px 0">
+    Remplissez le formulaire ci-dessous ou utilisez un des liens rapides dans la barre des réseaux.
+  </p>
+
+  <form id="contactForm">
+
+    
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+
+    <div class="row">
+      <div class="col">
+        <label class="muted" for="name">Nom</label>
+        <input id="name" name="name" type="text" placeholder="Ton nom" required>
+      </div>
+
+      <div class="col">
+        <label class="muted" for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="email.exemple@exemple.com" required>
+      </div>
+    </div>
+
+    <label class="muted" for="subject">Sujet</label>
+    <input id="subject" name="subject" type="text" placeholder="Sujet du message" required>
+
+    <label class="muted" for="message">Message</label>
+    <textarea id="message" name="message" rows="6" placeholder="Écris ton message ici..." required></textarea>
+
+    <div style="display:flex;gap:12px;align-items:center">
+      <button class="btn" type="submit">Envoyer</button>
+      <div id="formMsg" class="form-msg" role="status" aria-live="polite"></div>
+    </div>
+
+  </form>
+</section>
+      </main>
+
+      <aside>
+        <div class="panel">
+          <h3 style="margin:0 0 8px 0">Informations</h3>
+          <div class="contact-info">
+            <div class="info-item"><svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M3 7.5v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 7.5l-9 6-9-6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><div style="font-weight:700">Email</div><div class="muted">massibrakni7@gmail.com</div></div></div>
+
+            <div class="info-item"><svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M21 12.1A9 9 0 1 0 11.9 3 9 9 0 0 0 21 12.1z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><div style="font-weight:700">WhatsApp</div><div class="muted">+213 5 53 32 46 85</div><div class="muted">+213 6 97 99 49 15</div></div></div>
+
+            <div class="info-item"><svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2C7.6 2 4 5.6 4 10c0 3.5 2.3 6.5 5.5 7.6.4.1.6-.2.6-.5v-1.9c-2.2.5-2.7-1-2.7-1-.4-1-1-1.3-1-1.3-.8-.6.1-.6.1-.6.9.1 1.4.9 1.4.9.8 1.4 2.2 1 2.7.8.1-.6.3-1 .6-1.3-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.9-2.2-.1-.2-.4-1.1.1-2.3 0 0 .7-.2 2.3.9.7-.2 1.5-.3 2.3-.3s1.6.1 2.3.3c1.6-1.1 2.3-.9 2.3-.9.5 1.2.2 2.1.1 2.3.6.6.9 1.3.9 2.2 0 3.1-1.9 3.8-3.7 4 .3.3.6.8.6 1.6v2.4c0 .3.2.6.6.5C17.7 16.5 20 13.5 20 10c0-4.4-3.6-8-8-8z" stroke="currentColor" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/></svg><div><div style="font-weight:700">GitHub</div><div class="muted">github.com/massi273</div></div></div>
+          </div>
+
+          <div style="margin-top:12px">
+            <a class="btn" href="projets.html">Voir mes projets</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div class="links">
+        <a href="index.html">Accueil</a>
+        <a href="projets.html">Projets</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://github.com/tonprofil" target="_blank" rel="noopener">GitHub</a>
+      </div>
+
+      <div class="muted">© <span id="year"></span> Massinissa BRAKNI — <a href="#contactForm" style="color:inherit;text-decoration:underline">massibrakni7@gmail.com</a></div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+
+  // ===============================
+  // 🔹 THEME TOGGLE
+  // ===============================
+  const themeToggle = document.getElementById('themeToggle');
+  const stored = localStorage.getItem('theme');
+
+  if(stored){
+    document.documentElement.setAttribute('data-theme', stored);
+  }
+
+  if(themeToggle){
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? '' : 'light';
+
+      if(next){
+        document.documentElement.setAttribute('data-theme', next);
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+
+      localStorage.setItem('theme', next);
+    });
+  }
+
+  // ===============================
+  // 🔹 YEAR AUTO
+  // ===============================
+  const yearEl = document.getElementById('year');
+  if(yearEl){
+    yearEl.textContent = new Date().getFullYear();
+  }
+
+  // ===============================
+  // 🔹 EMAILJS INITIALISATION
+  // ===============================
+  if(typeof emailjs !== "undefined"){
+    emailjs.init("bXa19DnA1nqGRdcFL");
+  }
+
+  const form = document.getElementById("contactForm");
+  const formMsg = document.getElementById("formMsg");
+
+  function isEmail(e){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+  }
+
+  if(form){
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if(!name || !email || !subject || !message){
+        formMsg.style.color = "red";
+        formMsg.textContent = "Merci de remplir tous les champs.";
+        return;
+      }
+
+      if(!isEmail(email)){
+        formMsg.style.color = "red";
+        formMsg.textContent = "Adresse email invalide.";
+        return;
+      }
+
+      emailjs.sendForm("service_tb77gte", "template_299oh2d", this)
+        .then(() => {
+          formMsg.style.color = "#8be9a1";
+          formMsg.textContent = "Message envoyé avec succès !";
+          form.reset();
+          setTimeout(()=> formMsg.textContent = "", 4000);
+        })
+        .catch((error) => {
+          formMsg.style.color = "red";
+          formMsg.textContent = "Erreur lors de l'envoi.";
+          console.log(error);
+        });
+    });
+  }
+
+  // ===============================
+  // 🔹 SOCIAL ACCESSIBILITY
+  // ===============================
+  document.querySelectorAll('.social-item').forEach(el=>{
+    el.setAttribute('tabindex','0');
+    el.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter') el.click();
+    });
+  });
+
+  // ===============================
+  // 🔹 CONTACT TOGGLE
+  // ===============================
+  document.querySelectorAll('.contact-toggle').forEach(toggle => {
+    const box = toggle.querySelector('.contact-box');
+
+    toggle.addEventListener('focusin', () => {
+      toggle.setAttribute('aria-expanded','true');
+      if(box) box.setAttribute('aria-hidden','false');
+    });
+
+    toggle.addEventListener('focusout', () => {
+      setTimeout(() => {
+        if(!toggle.contains(document.activeElement)){
+          toggle.setAttribute('aria-expanded','false');
+          if(box) box.setAttribute('aria-hidden','true');
+        }
+      }, 0);
+    });
+
+    toggle.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape'){
+        toggle.setAttribute('aria-expanded','false');
+        if(box) box.setAttribute('aria-hidden','true');
+        toggle.blur();
+      }
+    });
+  });
+
+  // ===============================
+  // 🔹 COPY BUTTON
+  // ===============================
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const value = btn.dataset.copy;
+
+      try {
+        await navigator.clipboard.writeText(value);
+        const prev = btn.textContent;
+        btn.textContent = 'Copié';
+        setTimeout(()=> btn.textContent = prev, 1400);
+      } catch {
+        const tmp = document.createElement('textarea');
+        tmp.value = value;
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand('copy');
+        tmp.remove();
+        btn.textContent = 'Copié';
+        setTimeout(()=> btn.textContent = 'Copier', 1400);
+      }
+
+      e.stopPropagation();
+    });
+  });
+
+});
+</script>
+  
+</body>
+</html>

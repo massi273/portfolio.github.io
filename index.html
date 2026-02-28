@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Massinissa BRAKNI — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa4b2;
+      --accent1:#7c5cff;
+      --accent2:#00d4ff;
+      --glass: rgba(255,255,255,0.06);
+      --glass-2: rgba(255,255,255,0.03);
+      --radius:14px;
+      --max-width:1100px;
+    }
+    [data-theme="light"]{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --muted:#55606a;
+      --accent1:#5b21b6;
+      --accent2:#0ea5a4;
+      --glass: rgba(0,0,0,0.04);
+      --glass-2: rgba(0,0,0,0.02);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,0.06), transparent),
+                  radial-gradient(900px 500px at 90% 90%, rgba(0,212,255,0.03), transparent),
+                  var(--bg);
+      color: #e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      padding:36px 20px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .wrap{width:100%;max-width:var(--max-width)}
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:12px;
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:56px;height:56px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:18px;
+      box-shadow:0 8px 26px rgba(2,6,23,0.5);
+    }
+    .brand h1{font-size:16px;margin:0}
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
+    nav a:hover{color:var(--accent2);background:var(--glass-2)}
+
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      color:white;padding:8px 12px;border-radius:10px;border:0;font-weight:700;cursor:pointer;text-decoration:none;
+      display:inline-flex;align-items:center;gap:8px;
+      box-shadow:0 6px 18px rgba(12,10,30,0.45);
+    }
+    .icon-btn{
+      background:var(--card);border:1px solid rgba(255,255,255,0.03);padding:8px;border-radius:10px;color:var(--muted);
+      cursor:pointer;
+    }
+
+    /* Social bar (separate from nav) */
+    .social-bar{
+      margin:14px 0 22px 0;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:flex-start;
+      flex-wrap:wrap;
+    }
+    .social-item{
+      display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border:1px solid var(--glass);color:var(--muted);text-decoration:none;font-weight:600;font-size:14px;
+      transition:transform .18s ease, background .18s ease, color .18s ease;
+    }
+    .social-item svg{width:18px;height:18px;flex-shrink:0}
+    .social-item:hover{transform:translateY(-6px);color:white;background:linear-gradient(90deg,var(--accent1),var(--accent2))}
+
+    main{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:28px;
+      align-items:start;
+    }
+
+    .hero{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      padding:28px;border-radius:var(--radius);backdrop-filter: blur(6px);
+      border:1px solid var(--glass);
+    }
+    .intro{display:flex;gap:18px;align-items:center}
+    .avatar{
+      width:96px;height:96px;border-radius:16px;background:linear-gradient(135deg,var(--accent2),var(--accent1));
+      display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:white;
+      box-shadow:0 10px 30px rgba(2,6,23,0.5);
+    }
+    .intro h2{margin:0 0 6px 0}
+    .intro p{margin:0;color:var(--muted)}
+
+    .about{margin-top:18px;color:var(--muted)}
+    .cta-row{display:flex;gap:12px;margin-top:18px}
+
+    .projects{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:14px;
+    }
+    .card{
+      background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));
+      padding:14px;border-radius:12px;border:1px solid var(--glass);
+      transition:transform .28s ease, box-shadow .28s ease;
+      cursor:pointer;
+      display:flex;flex-direction:column;gap:8px;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.45)}
+    .card h3{margin:0 0 4px 0;font-size:16px}
+    .card p{margin:0;color:var(--muted);font-size:13px}
+    .card .tools{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap}
+    .tool{background:var(--glass);padding:6px 8px;border-radius:999px;color:var(--muted);font-size:12px}
+
+    .actions{display:flex;gap:8px;margin-top:10px}
+    .ghost{background:transparent;border:1px solid var(--glass);color:var(--muted);padding:8px 10px;border-radius:10px;text-decoration:none}
+    .icon-btn.live{background:transparent;border:1px solid var(--glass);color:var(--muted);padding:8px 10px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+    .icon-btn.live:hover{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;border:0}
+
+    aside{
+      position:sticky;top:40px;
+      align-self:start;
+    }
+    .panel{
+      background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));
+      padding:18px;border-radius:14px;border:1px solid var(--glass);
+    }
+    .skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .chip{background:var(--glass);padding:8px 10px;border-radius:999px;color:var(--muted);font-weight:600;font-size:13px}
+
+    footer{margin-top:28px;text-align:center;color:var(--muted);font-size:13px}
+
+    .modal{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:20px;
+      background:linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.85));
+      z-index:60;
+    }
+    .modal.open{display:flex}
+    .modal-card{width:100%;max-width:880px;background:var(--card);padding:20px;border-radius:12px;border:1px solid var(--glass);color:inherit;max-height:90vh;overflow:auto}
+    .modal-card h3{margin-top:0}
+    .modal-close{float:right;background:transparent;border:0;color:var(--muted);cursor:pointer;font-size:18px}
+
+    @media (max-width:980px){
+      main{grid-template-columns:1fr}
+      aside{position:relative;top:0}
+      .social-bar{justify-content:center}
+    }
+
+    .fade-up{opacity:0;transform:translateY(8px);animation:fadeUp .6s forwards}
+    @keyframes fadeUp{to{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <div class="wrap" id="page">
+    <header>
+      <div class="brand">
+        <div class="logo">MB</div>
+        <div>
+          <h1>Massinissa BRAKNI</h1>
+          <div style="font-size:13px;color:var(--muted)">Étudiant L3 Informatique • Développeur Web</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="index.html">Accueil</a>
+        <a href="projets.html">Projets</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="controls">
+        <button class="icon-btn" id="themeToggle" title="Basculer thème">🌓</button>
+        <a class="btn" href="https://github.com/massi273?tab=repositories" target="_blank" rel="noopener">Voir mes projets sur GitHub</a>
+      </div>
+    </header>
+
+    <!-- Social bar indépendante -->
+    <div class="social-bar" aria-label="Réseaux sociaux">
+      <a class="social-item" href="https://www.instagram.com/ma__ssiii_/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Instagram</span>
+      </a>
+
+      <a class="social-item" href="https://wa.me/213697994915" target="_blank" rel="noopener" aria-label="WhatsApp">
+ <path d="M12 3
+           A9 9 0 0 1 21 12
+           A9 9 0 0 1 12 21
+           A8.5 8.5 0 0 1 8 20
+           L4 21
+           L5 17
+           A8.5 8.5 0 0 1 3 12
+           A9 9 0 0 1 12 3Z"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linejoin="round"/>
+
+  <!-- Téléphone -->
+  <path d="M10 9.5
+           C10.3 8.8 11 8.5 11.6 8.8
+           L12.6 9.3
+           C13 9.5 13.2 10 13 10.4
+           L12.5 11.2
+           C12.4 11.4 12.4 11.7 12.6 11.9
+           L13.9 13.2
+           C14.1 13.4 14.4 13.4 14.6 13.3
+           L15.4 12.8
+           C15.8 12.6 16.3 12.8 16.5 13.2
+           L17 14.2
+           C17.3 14.8 17 15.5 16.3 15.8
+           C14.8 16.4 12.8 15.6 11.2 14
+           C9.6 12.4 8.8 10.4 9.4 8.9Z"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+</svg>        <span>WhatsApp</span>
+      </a>
+
+      <a class="social-item" href="https://www.linkedin.com/in/massinissa-brakni-03114a320/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 9h4v12H2z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>LinkedIn</span>
+      </a>
+
+      <a class="social-item" href="https://github.com/tonprofil" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2C7.6 2 4 5.6 4 10c0 3.5 2.3 6.5 5.5 7.6.4.1.6-.2.6-.5v-1.9c-2.2.5-2.7-1-2.7-1-.4-1-1-1.3-1-1.3-.8-.6.1-.6.1-.6.9.1 1.4.9 1.4.9.8 1.4 2.2 1 2.7.8.1-.6.3-1 .6-1.3-1.8-.2-3.6-.9-3.6-4 0-.9.3-1.6.9-2.2-.1-.2-.4-1.1.1-2.3 0 0 .7-.2 2.3.9.7-.2 1.5-.3 2.3-.3s1.6.1 2.3.3c1.6-1.1 2.3-.9 2.3-.9.5 1.2.2 2.1.1 2.3.6.6.9 1.3.9 2.2 0 3.1-1.9 3.8-3.7 4 .3.3.6.8.6 1.6v2.4c0 .3.2.6.6.5C17.7 16.5 20 13.5 20 10c0-4.4-3.6-8-8-8z" stroke="currentColor" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>GitHub</span>
+      </a>
+
+      <a class="social-item" href="contact.html" aria-label="Email">
+<svg viewBox="0 0 24 24" width="60" height="60" fill="none" aria-hidden="true">
+  
+  <!-- Contour enveloppe -->
+  <rect x="3" y="5" width="18" height="14" rx="2"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linejoin="round"/>
+
+  <!-- Rabat -->
+  <path d="M3 7L12 13L21 7"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+</svg>            <span>Email</span>
+      </a>
+    </div>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="intro fade-up" style="animation-delay:.05s">
+          <div class="avatar">MB</div>
+          <div>
+            <h2>Bonjour, je suis <strong>Massinissa BRAKNI</strong></h2>
+            <p>Je crée des interfaces modernes et performantes. J’aime le code propre et les expériences utilisateurs soignées.</p>
+            <div class="cta-row">
+              <a class="btn" href="projets.html">Voir mes projets</a>
+              <a class="icon-btn" href="https://github.com/tonprofil" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="about fade-up" style="animation-delay:.12s">
+          
+          <p><strong>À propos</strong> — Étudiant en L3 Informatique, développeur front‑end spécialisé en HTML, CSS, JavaScript en WEB .Développeur d’applications desktop en Python.</p>
+        </div>
+
+        <h3 style="margin-top:18px">Projets récents</h3>
+        <div class="projects" id="projects">
+         
+          <div class="card" data-title="Portfolio Animé" data-desc="Portfolio one‑page animé, optimisé et modulaire." data-tools="HTML;CSS;JavaScript" data-github="https://github.com/tonprofil/portfolio-anime" data-live="https://tonportfolio.example.com">
+            <h3>Portfolio Animé</h3>
+            <p>One‑page animé, optimisé pour performance et SEO.</p>
+            <div class="tools">
+              <span class="tool">HTML</span><span class="tool">CSS</span><span class="tool">JavaScript</span>
+            </div>
+            <div class="actions"></div>
+          </div>
+
+         
+          <div class="card" data-title="Dashboard Analytique" data-desc="Dashboard analytique avec graphiques interactifs et filtres temps réel." data-tools="Python,Sqlite" data-github="https://github.com/massi273/gest_equip">
+            <h3>Gestionnaire d'équipement Informatique </h3>
+            <p>Projet réalisé en groupe : application desktop de gestion de parc informatique (Python/Tkinter, SQLite). J’ai pris en charge tout le back-end : base de données, logique métier, architecture MVC et gestion des requêtes SQL.</p>
+            <div class="tools">
+              <span class="tool">Python</span><span class="tool">SQLite</span>
+            </div>
+            <div class="actions"></div>
+          </div>
+
+         
+          <div class="card" data-title="Mini Boutique" data-desc="Prototype e‑commerce headless avec panier et paiement simulé." data-tools="HTML , CSS ,JavaScript" data-github="https://github.com/massi273/l2informatique.github.io" data-live="https://massi273.github.io/l2informatique.github.io/">
+            <h3>L2 Resources </h3>
+            <p>Projet realisé avec FERNAN Yacine :Une plateforme dédiée aux étudiants de Licence 2 Informatique regroupant les différentes matières du programme. Il sert de portail organisé permettant d’accéder facilement aux contenus, ressources et informations liées aux modules étudiés </p>
+            <div class="tools">
+              <span class="tool">HTML</span><span class="tool">CSS</span><span class="tool">JS</span>
+            </div>
+            <div class="actions"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;color:var(--muted);font-size:13px">Clique sur une carte pour voir les détails. Les projets Web avec une démo en ligne affichent un bouton « Voir en ligne ».</div>
+      </section>
+
+      <aside>
+        <div class="panel fade-up" style="animation-delay:.18s">
+          <h3 id="skills">Compétences</h3>
+          <div class="skills">
+            <div class="chip">Language C</div>
+            <div class="chip">HTML</div>
+            <div class="chip">CSS</div>
+            <div class="chip">JavaScript</div>
+            <div class="chip">Python</div>
+            <div class="chip">SQL</div>
+            <div class="chip">UML</div>
+            <div class="chip">Figma</div>
+            <div class="chip">Linux</div>
+
+             
+          </div>
+
+          <div style="margin-top:12px">
+            <a class="btn" href="projets.html">Voir tous les projets</a>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:14px">
+          <h3>À propos du site</h3>
+          <p style="color:var(--muted);font-size:14px">Étudiant en informatique passionné par le développement logiciel, je m’intéresse particulièrement au back-end et à la gestion de bases de données, tout en développant également des projets web front-end.
+J’ai conçu des applications en Python (Tkinter, SQLite) en appliquant une architecture MVC et de bonnes pratiques, ainsi que des interfaces web modernes en HTML, CSS et JavaScript.
+Je suis actuellement à la recherche d’opportunités pour approfondir mes compétences et contribuer à des projets concrets.</p>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div style="margin-bottom:8px">
+        <a href="index.html" style="color:var(--muted);text-decoration:none;margin-right:10px">Accueil</a>
+        <a href="projets.html" style="color:var(--muted);text-decoration:none;margin-right:10px">Projets</a>
+        <a href="contact.html" style="color:var(--muted);text-decoration:none;margin-right:10px">Contact</a>
+        <a href="https://github.com/tonprofil" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none">GitHub</a>
+      </div>
+      <div style="font-size:13px;color:var(--muted)">© <span id="year"></span> Massinissa BRAKNI — <a href="#contactForm" style="color:inherit;text-decoration:underline">massibrakni7@gmail.com</a></div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Fermer">✕</button>
+      <h3 id="modalTitle">Titre projet</h3>
+      <p id="modalDesc" style="color:var(--muted)"></p>
+      <div id="modalTools" style="margin-top:10px;color:var(--muted);font-size:14px"></div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <a class="btn" id="modalGithub" href="#" target="_blank" rel="noopener">Voir sur GitHub</a>
+        <a class="icon-btn live" id="modalOpenLive" href="#" target="_blank" rel="noopener" style="display:none">Voir en ligne</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      // Theme toggle
+      const themeToggle = document.getElementById('themeToggle');
+      const stored = localStorage.getItem('theme');
+      if(stored) document.documentElement.setAttribute('data-theme', stored);
+      themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'light' ? '' : 'light';
+        if(next) document.documentElement.setAttribute('data-theme', next);
+        else document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', next);
+      });
+
+      // Prepare actions for each card: add GitHub and "Voir en ligne" only if data-live exists
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        const actions = card.querySelector('.actions');
+        // Ensure actions container exists
+        if(!actions){
+          const a = document.createElement('div');
+          a.className = 'actions';
+          card.appendChild(a);
+        }
+      });
+
+      // Populate actions (GitHub + live) dynamically
+      (function populateActions(){
+        document.querySelectorAll('.card').forEach(card => {
+          const actions = card.querySelector('.actions');
+          // GitHub button
+          if(card.dataset.github){
+            const gh = document.createElement('a');
+            gh.className = 'btn';
+            gh.href = card.dataset.github;
+            gh.target = '_blank';
+            gh.rel = 'noopener';
+            gh.textContent = 'Voir sur GitHub';
+            actions.appendChild(gh);
+          }
+          // Live demo button only if data-live is present and non-empty
+          if(card.dataset.live && card.dataset.live.trim() !== ''){
+            const live = document.createElement('a');
+            live.className = 'icon-btn live';
+            live.href = card.dataset.live;
+            live.target = '_blank';
+            live.rel = 'noopener';
+            live.textContent = 'Voir en ligne';
+            actions.appendChild(live);
+          }
+        });
+      })();
+
+      // Modal logic: open when clicking a card (except when clicking action links)
+      const modal = document.getElementById('modal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalTools = document.getElementById('modalTools');
+      const modalGithub = document.getElementById('modalGithub');
+      const modalOpenLive = document.getElementById('modalOpenLive');
+      const modalClose = document.getElementById('modalClose');
+
+      function openModal(card){
+        modalTitle.textContent = card.dataset.title || 'Projet';
+        modalDesc.textContent = card.dataset.desc || '';
+        modalTools.innerHTML = '<strong>Outils utilisés</strong>: ' + (card.dataset.tools ? card.dataset.tools.split(';').join(', ') : '—');
+        modalGithub.href = card.dataset.github || '#';
+        if(card.dataset.live && card.dataset.live.trim() !== ''){
+          modalOpenLive.style.display = 'inline-flex';
+          modalOpenLive.href = card.dataset.live;
+        } else {
+          modalOpenLive.style.display = 'none';
+          modalOpenLive.href = '#';
+        }
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+      }
+
+      document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          // ignore clicks on links inside the card
+          if(e.target.closest('a')) return;
+          openModal(card);
+        });
+        card.addEventListener('keydown', (e) => {
+          if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card); }
+        });
+      });
+
+      modalClose.addEventListener('click', () => {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden','true');
+      });
+      modal.addEventListener('click', (e) => { if(e.target === modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); } });
+
+      // Smooth scroll for internal anchors (if any)
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', (e)=>{
+          const target = document.querySelector(a.getAttribute('href'));
+          if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); }
+        });
+      });
+
+      // Year
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
