@@ -174,6 +174,78 @@
 
     .fade-up{opacity:0;transform:translateY(8px);animation:fadeUp .6s forwards}
     @keyframes fadeUp{to{opacity:1;transform:none}}
+    @media (max-width: 600px){
+  body{
+    padding:20px 14px;
+  }
+  header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+  }
+  nav{
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .brand h1{
+    font-size:14px;
+  }
+  main{
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+  .hero{
+    padding:18px;
+  }
+  .intro{
+    flex-direction:column;
+    text-align:center;
+  }
+  .avatar{
+    width:80px;
+    height:80px;
+    font-size:22px;
+  }
+  .cta-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .btn{
+    justify-content:center;
+  }
+  .projects{
+    grid-template-columns:1fr;
+  }
+  .card{
+    padding:16px;
+  }
+  aside{
+    position:relative;
+    top:0;
+  }
+  .social-bar{
+    justify-content:center;
+  }
+  .modal-card{
+    padding:16px;
+  }
+}
+    @media (min-width: 601px) and (max-width: 1024px){
+  body{
+    padding:28px 18px;
+  }
+  main{
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+  .projects{
+    grid-template-columns:repeat(2,1fr);
+  }
+  aside{
+    position:relative;
+    top:0;
+  }
+}
   </style>
 </head>
 <body>
@@ -493,3 +565,4 @@ Je suis actuellement à la recherche d’opportunités pour approfondir mes comp
 </body>
 
 </html>
+
