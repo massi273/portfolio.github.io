@@ -61,6 +61,68 @@
     .socials a:hover{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white}
 
     @media (max-width:900px){body{padding:18px}}
+    @media (max-width: 600px){
+
+  body{
+    padding:16px;
+  }
+
+  header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+  }
+  nav{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  nav a{
+    margin-left:0;
+  }
+  .toolbar{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .search{
+    width:100%;
+  }
+  .filters{
+    justify-content:center;
+  }
+  .grid{
+    grid-template-columns:1fr;
+  }
+  .thumb{
+    height:160px; /* un peu plus grand sur mobile */
+  }
+  .actions{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .btn,
+  .ghost,
+  .icon-btn{
+    text-align:center;
+    justify-content:center;
+  }
+  .modal-card{
+    padding:16px;
+  }
+}
+    @media (min-width: 601px) and (max-width: 1024px){
+  body{
+    padding:24px;
+  }
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+  header{
+    flex-wrap:wrap;
+  }
+}
+    
   </style>
 </head>
 <body>
@@ -441,3 +503,4 @@
 </body>
 
 </html>
+
